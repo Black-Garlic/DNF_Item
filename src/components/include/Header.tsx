@@ -3,12 +3,10 @@ import React from "react";
 function Header() {
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <a className="navbar-brand ps-3">교양 수업 학점 관리</a>
+      <a className="navbar-brand ps-3">105제 아이템 확인</a>
       <div className="ms-auto">
-        <a href="/CreditCheck" className="navbar-brand ps-3">
-          학점 확인
-        </a>
-        <a className="navbar-brand ps-3">시간표</a>
+        <a href="/CreditCheck" className="navbar-brand ps-3"></a>
+        <a className="navbar-brand ps-3"></a>
       </div>
       <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li className="nav-item dropdown">
