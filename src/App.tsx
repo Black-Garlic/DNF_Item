@@ -13,12 +13,7 @@ function App() {
       <Header />
       <div id="layoutSidenav">
         <div id="layoutSidenav_content" style={{ paddingLeft: 0 }}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/CreditCheck" element={<CreditCheck />} />
-            </Routes>
-          </BrowserRouter>
+          <Home />
         </div>
       </div>
       <Footer />
