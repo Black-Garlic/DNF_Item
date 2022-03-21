@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import "@assets/css/styles.css";
 import FilterTable from "@components/FilterTable";
 import DataTable from "@components/DataTable";
+import DungeonTable from "@components/DungeonTable";
 
 function Home() {
   const [filters, setFilters] = useState<string[]>([]);
-
   const addFilter = (filter: string) => {
     if (filters.includes(filter)) return;
     let newFilter: string[] = [...filters];
