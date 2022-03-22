@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "@assets/css/styles.css";
+import { useAppSelector } from "@store/store";
 
-interface DungeonProps {
-  count: number[];
-}
+export default function DungeonTable() {
+  const count = useAppSelector((state) => state.data.dungeonCount);
 
-export default function DungeonTable({ count }: DungeonProps) {
   return (
     <table
       className={"dataTable-table"}

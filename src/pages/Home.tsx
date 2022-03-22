@@ -26,12 +26,9 @@ function Home() {
   return (
     <main>
       <div className="container-fluid px-4">
-        <FilterTable
-          addFilter={addFilter}
-          removeFilter={removeFilter}
-          filters={filters}
-        />
-        <DataTable filters={filters} />
+        <FilterTable />
+        <DungeonTable />
+        <DataTable />
       </div>
     </main>
   );

@@ -3,7 +3,6 @@ import logo from "./logo.svg";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "@assets/css/styles.css";
 import Home from "@pages/Home";
-import CreditCheck from "@pages/CreditCheck";
 import Header from "@components/include/Header";
 import Footer from "@components/include/Footer";
 

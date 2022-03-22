@@ -1,27 +1,29 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addFilters, removeFilters } from "@services/DataSlice";
 import "@assets/css/styles.css";
+import { useAppDispatch, useAppSelector } from "@store/store";
 
 interface FilterProps {
   color: string;
   background: string;
   item: string;
-  addFilter: any;
-  removeFilter: any;
-  filters: string[];
+  handleClick: any;
 }
 
 export default function FilterItem({
   color,
   background,
   item,
-  addFilter,
-  removeFilter,
-  filters,
+  handleClick,
 }: FilterProps) {
+  const dispatch = useAppDispatch();
+  const filters = useAppSelector((state) => state.data.filters);
+
   if (filters.includes(item)) {
     return (
       <td
-        onClick={(e) => removeFilter(item)}
+        onClick={(e) => handleClick(item, false)}
         style={{ color: color, background: background }}
         key={item + "-On"}
       >
@@ -31,7 +33,7 @@ export default function FilterItem({
   } else {
     return (
       <td
-        onClick={(e) => addFilter(item)}
+        onClick={(e) => handleClick(item, true)}
         //style={{ color: color, background: background }}
         key={item + "-Off"}
       >
