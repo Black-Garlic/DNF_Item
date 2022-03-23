@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "@assets/css/styles.css";
-import { useAppSelector } from "@store/store";
+import { useAppDispatch, useAppSelector } from "@store/store";
+import { itemProps } from "@typings/types";
+import { removeEquip, setEquip } from "@services/DataSlice";
 
 export default function DataTable() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const items = useAppSelector((state) => state.data.itemList);
+  const equip = useAppSelector((state) => state.data.equip);
+  const dispatch = useAppDispatch();
 
   const setReinString = (item: any) => {
     let rein = "";
@@ -122,6 +126,220 @@ export default function DataTable() {
     return stat;
   };
 
+  const largeRowItem = (
+    item: itemProps,
+    index: number,
+    partString?: string
+  ) => {
+    if (item.drop3) {
+      return (
+        <>
+          <tr
+            key={
+              partString ? partString + "-large-1" : item.itemName + "-large-1"
+            }
+            style={{ borderTopWidth: 2 }}
+          >
+            <td
+              rowSpan={3}
+              onClick={() => {
+                if (partString) {
+                  dispatch(removeEquip(item));
+                } else {
+                  dispatch(setEquip(item));
+                }
+              }}
+            >
+              {item.itemName}
+            </td>
+            <td rowSpan={3}>
+              {item.part}
+              {item.material && "(" + item.material + ")"}
+            </td>
+            <td rowSpan={3}>{item.dmg}</td>
+            <td rowSpan={3}>{item.buff}</td>
+            <td rowSpan={3}>{setReinString(item)}</td>
+            <td rowSpan={3}>{setResistString(item)}</td>
+            <td rowSpan={3}>{setStatusString(item)}</td>
+            <td rowSpan={3}>{setStatString(item)}</td>
+            <td>{item.drop1}</td>
+          </tr>
+          <tr
+            key={
+              partString ? partString + "-large-2" : item.itemName + "-large-2"
+            }
+          >
+            <td>{item.drop2}</td>
+          </tr>
+          <tr
+            key={
+              partString ? partString + "-large-3" : item.itemName + "-large-3"
+            }
+          >
+            <td>{item.drop3}</td>
+          </tr>
+          <tr key={"option-" + index}>
+            {parseLineBreak(item.option1, 2)}
+            {parseLineBreak(item.option2, 3)}
+            {parseLineBreak(item.option3, 3)}
+            {parseLineBreak(item.option4, 2)}
+          </tr>
+        </>
+      );
+    } else if (item.drop2) {
+      return (
+        <>
+          <tr
+            key={
+              partString ? partString + "-large-1" : item.itemName + "-large-1"
+            }
+            style={{ borderTopWidth: 2 }}
+          >
+            <td
+              rowSpan={2}
+              onClick={() => {
+                if (partString) {
+                  dispatch(removeEquip(item));
+                } else {
+                  dispatch(setEquip(item));
+                }
+              }}
+            >
+              {item.itemName}
+            </td>
+            <td rowSpan={2}>
+              {item.part}
+              {item.material && "(" + item.material + ")"}
+            </td>
+            <td rowSpan={2}>{item.dmg}</td>
+            <td rowSpan={2}>{item.buff}</td>
+            <td rowSpan={2}>{setReinString(item)}</td>
+            <td rowSpan={2}>{setResistString(item)}</td>
+            <td rowSpan={2}>{setStatusString(item)}</td>
+            <td rowSpan={2}>{setStatString(item)}</td>
+            <td>{item.drop1}</td>
+          </tr>
+          <tr
+            key={
+              partString ? partString + "-large-2" : item.itemName + "-large-2"
+            }
+          >
+            <td>{item.drop2}</td>
+          </tr>
+          <tr key={"option-" + index}>
+            {parseLineBreak(item.option1, 2)}
+            {parseLineBreak(item.option2, 3)}
+            {parseLineBreak(item.option3, 3)}
+            {parseLineBreak(item.option4, 2)}
+          </tr>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <tr
+            key={
+              partString ? partString + "-large-1" : item.itemName + "-large-1"
+            }
+            style={{ borderTopWidth: 2 }}
+          >
+            <td
+              onClick={() => {
+                if (partString) {
+                  dispatch(removeEquip(item));
+                } else {
+                  dispatch(setEquip(item));
+                }
+              }}
+            >
+              {item.itemName}
+            </td>
+            <td>
+              {item.part}
+              {item.material && "(" + item.material + ")"}
+            </td>
+            <td>{item.dmg}</td>
+            <td>{item.buff}</td>
+            <td>{setReinString(item)}</td>
+            <td>{setResistString(item)}</td>
+            <td>{setStatusString(item)}</td>
+            <td>{setStatString(item)}</td>
+            <td>{item.drop1}</td>
+          </tr>
+          <tr key={"option-" + index}>
+            {parseLineBreak(item.option1, 2)}
+            {parseLineBreak(item.option2, 3)}
+            {parseLineBreak(item.option3, 3)}
+            {parseLineBreak(item.option4, 2)}
+          </tr>
+        </>
+      );
+    }
+  };
+
+  const smallRowItem = (
+    item: itemProps,
+    index: number,
+    partString?: string
+  ) => {
+    return (
+      <tbody>
+        <tr
+          key={
+            partString ? partString + "-small-1" : item.itemName + "-small-1"
+          }
+        >
+          <td
+            colSpan={2}
+            onClick={() => {
+              if (partString) {
+                dispatch(removeEquip(item));
+              } else {
+                dispatch(setEquip(item));
+              }
+            }}
+          >
+            {item.itemName}
+          </td>
+          <td>피해증가 : {item.dmg}</td>
+          <td>{setReinString(item)}</td>
+          <td>{setResistString(item)}</td>
+          <td colSpan={3}>{item.drop1 ? item.drop1 : ""}</td>
+        </tr>
+        <tr
+          key={
+            partString ? partString + "-small-2" : item.itemName + "-small-2"
+          }
+        >
+          <td colSpan={2}>
+            {item.part}
+            {item.material && "(" + item.material + ")"}
+          </td>
+          <td>버프력 : {item.buff}</td>
+          <td>{setStatusString(item)}</td>
+          <td>{setStatString(item)}</td>
+          <td colSpan={3}>{item.drop2 ? item.drop2 : ""}</td>
+        </tr>
+        {item.drop3 && (
+          <tr>
+            <td colSpan={5}></td>
+            <td colSpan={3}>item.drop3</td>
+          </tr>
+        )}
+        <tr
+          key={
+            partString ? partString + "-small-3" : item.itemName + "-small-3"
+          }
+        >
+          {parseLineBreak(item.option1, 2)}
+          {parseLineBreak(item.option2, 2)}
+          {parseLineBreak(item.option3, 2)}
+          {parseLineBreak(item.option4, 2)}
+        </tr>
+      </tbody>
+    );
+  };
+
   const parseLineBreak = (option: string, colSpan: number) => {
     let result: any;
     const splitOption = option.split("\n");
@@ -144,90 +362,158 @@ export default function DataTable() {
 
   if (windowSize < 1000) {
     return (
-      <table
-        className={"dataTable-table"}
-        style={{ fontSize: 12, textAlign: "center" }}
-      >
-        <thead>
-          <tr>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-            <th
-              style={{
-                width: "12.5%",
-              }}
-            ></th>
-          </tr>
-        </thead>
-        {items.map((item, index) => {
-          return (
-            <tbody>
-              <tr key={"1-" + index}>
-                <td colSpan={2}>{item.itemName}</td>
-                <td>피해증가 : {item.dmg}</td>
-                <td>{setReinString(item)}</td>
-                <td>{setResistString(item)}</td>
-                <td colSpan={3}>{item.drop1 ? item.drop1 : ""}</td>
-              </tr>
-              <tr key={"2-" + index}>
-                <td colSpan={2}>
-                  {item.part}
-                  {item.material && "(" + item.material + ")"}
-                </td>
-                <td>버프력 : {item.buff}</td>
-                <td>{setStatusString(item)}</td>
-                <td>{setStatString(item)}</td>
-                <td colSpan={3}>{item.drop2 ? item.drop2 : ""}</td>
-              </tr>
-              {item.drop3 && (
-                <tr>
-                  <td colSpan={5}></td>
-                  <td colSpan={3}>item.drop3</td>
-                </tr>
-              )}
-              <tr key={"3-" + index}>
-                {parseLineBreak(item.option1, 2)}
-                {parseLineBreak(item.option2, 2)}
-                {parseLineBreak(item.option3, 2)}
-                {parseLineBreak(item.option4, 2)}
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
+      <>
+        <table
+          className={"dataTable-table"}
+          style={{ fontSize: 12, textAlign: "center" }}
+        >
+          <thead>
+            <tr>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+            </tr>
+          </thead>
+          {equip.top !== undefined && smallRowItem(equip.top, 0, "top")}
+          {equip.shoulder !== undefined &&
+            smallRowItem(equip.shoulder, 1, "shoulder")}
+          {equip.pants !== undefined && smallRowItem(equip.pants, 2, "pants")}
+          {equip.belt !== undefined && smallRowItem(equip.belt, 3, "belt")}
+          {equip.shoe !== undefined && smallRowItem(equip.shoe, 4, "shoe")}
+          {equip.bracelet !== undefined &&
+            smallRowItem(equip.bracelet, 5, "bracelet")}
+          {equip.neckless !== undefined &&
+            smallRowItem(equip.neckless, 6, "neckless")}
+          {equip.ring !== undefined && smallRowItem(equip.ring, 7, "ring")}
+          {equip.support !== undefined &&
+            smallRowItem(equip.support, 8, "support")}
+          {equip.stone !== undefined && smallRowItem(equip.stone, 9, "stone")}
+          {equip.earRing !== undefined &&
+            smallRowItem(equip.earRing, 10, "earRing")}
+        </table>
+        <table
+          className={"dataTable-table"}
+          style={{ fontSize: 12, textAlign: "center" }}
+        >
+          <thead>
+            <tr>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+              <th
+                style={{
+                  width: "12.5%",
+                }}
+              >
+                {" "}
+              </th>
+            </tr>
+          </thead>
+
+          {items.map((item, index) => {
+            return smallRowItem(item, index);
+          })}
+        </table>
+      </>
     );
   } else {
     return (
@@ -249,93 +535,46 @@ export default function DataTable() {
               <th style={{ width: "25%" }}>드랍</th>
             </tr>
           </thead>
+          <tbody style={{ marginBottom: 30 }}>
+            {equip.top !== undefined && largeRowItem(equip.top, 0, "top")}
+            {equip.shoulder !== undefined &&
+              largeRowItem(equip.shoulder, 1, "shoulder")}
+            {equip.pants !== undefined && largeRowItem(equip.pants, 2, "pants")}
+            {equip.belt !== undefined && largeRowItem(equip.belt, 3, "belt")}
+            {equip.shoe !== undefined && largeRowItem(equip.shoe, 4, "shoe")}
+            {equip.bracelet !== undefined &&
+              largeRowItem(equip.bracelet, 5, "bracelet")}
+            {equip.neckless !== undefined &&
+              largeRowItem(equip.neckless, 6, "neckless")}
+            {equip.ring !== undefined && largeRowItem(equip.ring, 7, "ring")}
+            {equip.support !== undefined &&
+              largeRowItem(equip.support, 8, "support")}
+            {equip.stone !== undefined && largeRowItem(equip.stone, 9, "stone")}
+            {equip.earRing !== undefined &&
+              largeRowItem(equip.earRing, 10, "earRing")}
+          </tbody>
+        </table>
+
+        <table className={"dataTable-table"} style={{ fontSize: 12 }}>
+          <thead>
+            <tr>
+              <th style={{ width: "15%" }}>장비 이름</th>
+              <th style={{ width: "10%" }}>부위</th>
+
+              <th style={{ width: "8%" }}>피해증가</th>
+              <th style={{ width: "8%" }}>버프력</th>
+              <th style={{ width: "9%" }}>속강</th>
+
+              <th style={{ width: "9%" }}>속저</th>
+              <th style={{ width: "8%" }}>상변</th>
+              <th style={{ width: "8%" }}>스탯</th>
+
+              <th style={{ width: "25%" }}>드랍</th>
+            </tr>
+          </thead>
           <tbody>
             {items.map((item, index) => {
-              if (item.drop3) {
-                return (
-                  <>
-                    <tr key={"1-" + index} style={{ borderTopWidth: 2 }}>
-                      <td rowSpan={3}>{item.itemName}</td>
-                      <td rowSpan={3}>
-                        {item.part}
-                        {item.material && "(" + item.material + ")"}
-                      </td>
-                      <td rowSpan={3}>{item.dmg}</td>
-                      <td rowSpan={3}>{item.buff}</td>
-                      <td rowSpan={3}>{setReinString(item)}</td>
-                      <td rowSpan={3}>{setResistString(item)}</td>
-                      <td rowSpan={3}>{setStatusString(item)}</td>
-                      <td rowSpan={3}>{setStatString(item)}</td>
-                      <td>{item.drop1}</td>
-                    </tr>
-                    <tr key={"2-" + index}>
-                      <td>{item.drop2}</td>
-                    </tr>
-                    <tr key={"3-" + index}>
-                      <td>{item.drop3}</td>
-                    </tr>
-                    <tr key={"option-" + index}>
-                      {parseLineBreak(item.option1, 2)}
-                      {parseLineBreak(item.option2, 3)}
-                      {parseLineBreak(item.option3, 3)}
-                      {parseLineBreak(item.option4, 2)}
-                    </tr>
-                  </>
-                );
-              } else if (item.drop2) {
-                return (
-                  <>
-                    <tr key={"1-" + index} style={{ borderTopWidth: 2 }}>
-                      <td rowSpan={2}>{item.itemName}</td>
-                      <td rowSpan={2}>
-                        {item.part}
-                        {item.material && "(" + item.material + ")"}
-                      </td>
-                      <td rowSpan={2}>{item.dmg}</td>
-                      <td rowSpan={2}>{item.buff}</td>
-                      <td rowSpan={2}>{setReinString(item)}</td>
-                      <td rowSpan={2}>{setResistString(item)}</td>
-                      <td rowSpan={2}>{setStatusString(item)}</td>
-                      <td rowSpan={2}>{setStatString(item)}</td>
-                      <td>{item.drop1}</td>
-                    </tr>
-                    <tr key={"2-" + index}>
-                      <td>{item.drop2}</td>
-                    </tr>
-                    <tr key={"option-" + index}>
-                      {parseLineBreak(item.option1, 2)}
-                      {parseLineBreak(item.option2, 3)}
-                      {parseLineBreak(item.option3, 3)}
-                      {parseLineBreak(item.option4, 2)}
-                    </tr>
-                  </>
-                );
-              } else {
-                return (
-                  <>
-                    <tr key={"1-" + index} style={{ borderTopWidth: 2 }}>
-                      <td>{item.itemName}</td>
-                      <td>
-                        {item.part}
-                        {item.material && "(" + item.material + ")"}
-                      </td>
-                      <td>{item.dmg}</td>
-                      <td>{item.buff}</td>
-                      <td>{setReinString(item)}</td>
-                      <td>{setResistString(item)}</td>
-                      <td>{setStatusString(item)}</td>
-                      <td>{setStatString(item)}</td>
-                      <td>{item.drop1}</td>
-                    </tr>
-                    <tr key={"option-" + index}>
-                      {parseLineBreak(item.option1, 2)}
-                      {parseLineBreak(item.option2, 3)}
-                      {parseLineBreak(item.option3, 3)}
-                      {parseLineBreak(item.option4, 2)}
-                    </tr>
-                  </>
-                );
-              }
+              return largeRowItem(item, index);
             })}
           </tbody>
         </table>
