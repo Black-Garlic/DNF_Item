@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { itemProps } from "@typings/types";
+import { equipItem, itemProps } from "@typings/types";
 import { itemsInfo } from "@domains/itemsInfo";
 import { filterItem, setDungeonCount } from "@libs/Filter";
 import { dungeonItem } from "@domains/filterInfo";
@@ -8,19 +8,7 @@ interface DataSliceProps {
   filters: string[];
   dungeonCount: number[];
   itemList: itemProps[];
-  equip: {
-    top?: itemProps;
-    shoulder?: itemProps;
-    pants?: itemProps;
-    belt?: itemProps;
-    shoe?: itemProps;
-    bracelet?: itemProps;
-    neckless?: itemProps;
-    ring?: itemProps;
-    support?: itemProps;
-    stone?: itemProps;
-    earRing?: itemProps;
-  };
+  equip: equipItem;
 }
 
 const initialState: DataSliceProps = {

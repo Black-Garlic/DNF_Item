@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "@assets/css/styles.css";
-import FilterItem from "@components/FilterItem";
+import FilterItem from "@components/FilterTable/FilterItem";
 import { useAppDispatch, useAppSelector } from "@store/store";
 import { itemProps } from "@typings/types";
 import {
@@ -14,7 +14,6 @@ import { addFilters, removeFilters } from "@services/DataSlice";
 export default function FilterTable() {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const dispatch = useAppDispatch();
-  const filters = useAppSelector((state) => state.data.filters);
 
   window.onresize = () => {
     setWindowSize(window.innerWidth);

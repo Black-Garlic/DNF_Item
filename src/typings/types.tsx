@@ -2,30 +2,6 @@ export interface itemProps {
   itemName: string;
   part: string;
   material?: string;
-  allRein?: boolean;
-  allResist?: boolean;
-  fireRein?: boolean;
-  fireResist?: boolean;
-  lightRein?: boolean;
-  lightResist?: boolean;
-  iceRein?: boolean;
-  iceResist?: boolean;
-  darkRein?: boolean;
-  darkResist?: boolean;
-  allState?: boolean;
-  stun?: boolean;
-  burn?: boolean;
-  poison?: boolean;
-  electric?: boolean;
-  bleed?: boolean;
-  blind?: boolean;
-  sleep?: boolean;
-  curse?: boolean;
-  stone?: boolean;
-  confuse?: boolean;
-  frozen?: boolean;
-  hp?: boolean;
-  mp?: boolean;
   drop1?: string;
   drop2?: string;
   drop3?: string;
@@ -35,4 +11,25 @@ export interface itemProps {
   option2: string;
   option3: string;
   option4: string;
+  equip?: boolean;
+}
+
+export interface equipItem {
+  top?: itemProps;
+  shoulder?: itemProps;
+  pants?: itemProps;
+  belt?: itemProps;
+  shoe?: itemProps;
+  bracelet?: itemProps;
+  neckless?: itemProps;
+  ring?: itemProps;
+  support?: itemProps;
+  stone?: itemProps;
+  earRing?: itemProps;
+}
+
+export interface dataTableProps {
+  item: itemProps;
+  index: number;
+  partString?: string;
 }
